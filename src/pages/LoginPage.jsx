@@ -25,17 +25,17 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-         try {
-        const response = await api.post('/auth/signin', formData);
-        if (response.data.access_token) {
-            login(response.data.access_token, response.data.user);
-            navigate('/');
-        }
-    } catch (err) {
+        try {
+            const response = await api.post('/auth/signin', formData);
+            if (response.data.access_token) {
+                login(response.data.access_token, response.data.user);
+                navigate('/');
+            }
+        } catch (err) {
             setError(err.response?.data?.detail || 'Invalid credentials. Please try again.');
         }
     };
-    
+
     if (user) return null;
 
     return (

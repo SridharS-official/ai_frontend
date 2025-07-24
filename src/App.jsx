@@ -7,6 +7,8 @@ import InterviewPage from './pages/InterviewPage';
 import DashboardPage from './pages/DashboardPage';
 import ReportPage from './pages/ReportPage';
 import AssessmentPage from './pages/AssessmentPage';
+import BatchAssessmentPage from './pages/BatchAssessmentPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 
 function App() {
     return (
@@ -44,6 +46,15 @@ function App() {
                             <ReportPage />
                         </ProtectedRoute>
                     }
+                />
+
+                <Route
+                    path="/batch-create"
+                    element={<ProtectedRoute><BatchAssessmentPage /></ProtectedRoute>}
+                />
+                 <Route
+                    path="/admin"
+                    element={<ProtectedRoute><AdminDashboardPage /></ProtectedRoute>}
                 />
             </Route>
         </Routes>

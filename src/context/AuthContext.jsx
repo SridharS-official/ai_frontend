@@ -1,42 +1,43 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import React, { createContext, useState } from 'react';
+import { jwtDecode } from 'jwt-decode'; // Ensure you have run: npm install jwt-decode
 
 export const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem('token'));
-
-    useEffect(() => {
-        // On initial load, try to set user from existing token
-        const tokenInStorage = localStorage.getItem('token');
-        if (tokenInStorage) {
-            try {
-                const decodedUser = jwtDecode(tokenInStorage);
-                setUser(decodedUser);
-            } catch (e) {
-                console.log('e: ', e);
-                // Invalid token, clear it
-                localStorage.removeItem('token');
-                setToken(null);
+// Helper function to get user data from the token in local storage
+const getUserFromToken = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        try {
+            const decodedUser = jwtDecode(token);
+            // Check if token is expired
+            if (decodedUser.exp * 1000 > Date.now()) {
+                return { ...decodedUser, token };
             }
+        } catch (e) {
+            console.error("Invalid token:", e);
         }
-    }, []);
+    }
+    // If no token, token is invalid, or token is expired, clear storage
+    localStorage.removeItem('token');
+    return null;
+};
+
+export const AuthProvider = ({ children }) => {
+    // Initialize the user state synchronously
+    const [user, setUser] = useState(getUserFromToken());
 
     const login = (newToken, userData) => {
         localStorage.setItem('token', newToken);
-        setToken(newToken);
-        setUser(userData);
+        setUser({ ...userData, token: newToken });
     };
 
     const logout = () => {
         localStorage.removeItem('token');
-        setToken(null);
         setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, token, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
