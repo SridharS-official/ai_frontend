@@ -6,16 +6,12 @@ import ResultsDisplay from '../components/ResultsDisplay';
 const InterviewPage = () => {
     const { user } = useContext(AuthContext);
 
-    // Common State
     const [resume, setResume] = useState(null);
     const [jobDescription, setJobDescription] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
-    // State for HR Flow
     const [generatedLink, setGeneratedLink] = useState('');
 
-    // State for Student Flow
     const [questions, setQuestions] = useState([]);
     const [analysisId, setAnalysisId] = useState(null);
     const [answers, setAnswers] = useState([]);
@@ -92,8 +88,6 @@ const InterviewPage = () => {
             setIsLoading(false);
         }
     };
-
-    // --- RENDER LOGIC ---
 
     const renderHrForm = () => (
         !generatedLink ? (

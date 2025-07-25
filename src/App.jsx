@@ -13,16 +13,12 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 function App() {
     return (
         <Routes>
-            {/* Public route for candidates */}
             <Route path="/assessment/:token" element={<AssessmentPage />} />
 
-            {/* Main application layout for logged-in users */}
             <Route path="/" element={<Layout />}>
-                {/* Public Routes within the layout */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
 
-                {/* Protected Routes */}
                 <Route
                     index
                     element={

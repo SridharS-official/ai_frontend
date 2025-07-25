@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import MetricCard from '../components/MetricCard'; // Reuse our metric card
+import MetricCard from '../components/MetricCard'; 
 
 const AdminDashboardPage = () => {
-    // State for paginated logs
     const [logData, setLogData] = useState(null);
-    // State for overall metrics
     const [metrics, setMetrics] = useState(null);
-    // State to track the current page
     const [currentPage, setCurrentPage] = useState(1);
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Fetch the main paginated log data whenever the currentPage changes
     useEffect(() => {
         const fetchLogs = async () => {
             setIsLoading(true);
             try {
-                // Pass page and limit as query parameters
                 const response = await api.get('/admin/logs', {
                     params: { page: currentPage, limit: 10 }
                 });
@@ -33,7 +28,6 @@ const AdminDashboardPage = () => {
         fetchLogs();
     }, [currentPage]);
 
-    // Fetch the overall metrics only once when the component mounts
     useEffect(() => {
         const fetchMetrics = async () => {
             try {
@@ -54,7 +48,6 @@ const AdminDashboardPage = () => {
         <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-6">
             <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard: LLM Logs</h1>
 
-            {/* Metrics Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {metrics ? (
                     <>
@@ -66,7 +59,6 @@ const AdminDashboardPage = () => {
                 ) : <p>Loading metrics...</p>}
             </div>
 
-            {/* Logs Table Section */}
             <div className="bg-white p-6 rounded-lg shadow-md">
                 <h2 className="text-xl font-semibold mb-4 text-gray-700">Recent Agent Calls</h2>
                 {isLoading ? <p>Loading logs...</p> : (
@@ -96,7 +88,6 @@ const AdminDashboardPage = () => {
                     </div>
                 )}
                 
-                {/* --- NEW PAGINATION CONTROLS --- */}
                 {logData && logData.total_pages > 1 && (
                      <div className="mt-4 flex justify-between items-center">
                         <button

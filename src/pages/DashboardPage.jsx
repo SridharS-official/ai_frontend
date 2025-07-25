@@ -36,7 +36,7 @@ const DashboardPage = () => {
                 setDashboardData(response.data);
             } catch (err) {
                 console.error("Failed to load dashboard data:", err);
-                setDashboardData({ role: 'student', chart_data: [] }); // Default to empty
+                setDashboardData({ role: 'student', chart_data: [] });
             } finally {
                 setIsLoading(false);
             }

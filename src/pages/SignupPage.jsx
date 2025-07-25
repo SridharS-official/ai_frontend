@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 const SignupPage = () => {
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
     const [role, setRole] = useState('student');
-    const [errors, setErrors] = useState({}); // Use an object for multiple errors
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
 
@@ -22,13 +22,11 @@ const SignupPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors({}); // Clear previous errors
+        setErrors({});
         try {
             await api.post('/auth/signup', { ...formData, role });
             navigate('/login');
         } catch (err) {
-            // --- THIS IS THE IMPROVEMENT ---
-            // Handle detailed validation errors from FastAPI
             if (err.response && err.response.status === 422) {
                 const newErrors = {};
                 err.response.data.errors.forEach(error => {
@@ -54,7 +52,6 @@ const SignupPage = () => {
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     {errors.general && <p className="text-red-500 text-center">{errors.general}</p>}
                     
-                    {/* Role Selection */}
                     <div className="flex justify-around">
                         <label className="flex items-center space-x-2">
                             <input
@@ -74,7 +71,6 @@ const SignupPage = () => {
                         </label>
                     </div>
 
-                    {/* Form Fields with individual error messages */}
                     <div>
                         <input
                             type="text" name="name" value={formData.name} onChange={handleChange}

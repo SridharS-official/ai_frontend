@@ -17,7 +17,6 @@ const AssessmentPage = () => {
             try {
                 const response = await api.get(`/assessment/public/${token}`);
                 setAssessment(response.data);
-                // Initialize answers state based on the fetched questions
                 setAnswers(response.data.questions.map(q => ({ question: q, answer: '' })));
             } catch (err) {
                 setError('This assessment link is invalid or has expired.');

@@ -6,17 +6,14 @@ import { AuthContext } from '../context/AuthContext';
 const LoginPage = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
-    const { user, login } = useContext(AuthContext); // Get user from context
+    const { user, login } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // --- THIS IS THE FIX ---
-    // Redirect if user is already logged in
     useEffect(() => {
         if (user) {
             navigate('/');
         }
     }, [user, navigate]);
-    // --- END OF FIX ---
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,7 +44,6 @@ const LoginPage = () => {
                     </h2>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    {/* ... form content remains the same */}
                     {error && <p className="text-red-500 text-sm">{error}</p>}
                     <input
                         type="email"

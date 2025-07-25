@@ -49,7 +49,6 @@ const ReportPage = () => {
     const { full_result, resume_filename, job_description_text } = report;
     const { resume_analysis, mock_response, success_prediction, gap_fixer } = full_result;
 
-    // --- Prepare Data for Radar Chart with safe access ---
     const radarChartData = {
         labels: [
             'Resume Clarity', 'Resume Relevance', 'Resume Structure', 
