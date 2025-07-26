@@ -1,7 +1,6 @@
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
 import { jwtDecode } from 'jwt-decode'; // Ensure you have run: npm install jwt-decode
-
-export const AuthContext = createContext(null);
+import { AuthContext } from './AuthContext';
 
 const getUserFromToken = () => {
     const token = localStorage.getItem('token');
